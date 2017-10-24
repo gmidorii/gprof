@@ -1,18 +1,30 @@
 package cpu
 
-import "github.com/shirou/gopsutil/cpu"
+import (
+	"time"
+
+	"github.com/shirou/gopsutil/cpu"
+)
 
 type CPU struct {
-	Count int
+	Cores []Core
+}
+
+type Core struct {
+	Percent float64
 }
 
 func Run() (CPU, error) {
-	c, err := cpu.Counts(false)
+	p, err := cpu.Percent(1*time.Second, true)
 	if err != nil {
 		return CPU{}, err
 	}
-	cpu := CPU{
-		Count: c,
+	cores := make([]Core, len(p))
+	for i, v := range p {
+		cores[i] = Core{v}
 	}
-	return cpu, nil
+
+	return CPU{
+		Cores: cores,
+	}, nil
 }

@@ -12,7 +12,9 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(cpu)
+	for _, v := range cpu.Cores {
+		fmt.Println(v.Percent)
+	}
 	return nil
 }
 
