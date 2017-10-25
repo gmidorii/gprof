@@ -1,21 +1,23 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"net/http"
 
-	"github.com/midorigreen/gprof/prof/cpu"
+	"github.com/graphql-go/handler"
+	"github.com/midorigreen/gprof/prof"
 )
 
 func run() error {
-	cpu, err := cpu.Run()
-	if err != nil {
-		return err
-	}
-	for _, v := range cpu.Cores {
-		fmt.Println(v.Percent)
-	}
-	return nil
+	h := handler.New(
+		&handler.Config{
+			Schema:   &prof.Schema,
+			Pretty:   true,
+			GraphiQL: true,
+		})
+
+	http.Handle("/gq", h)
+	return http.ListenAndServe(":8080", nil)
 }
 
 func main() {

@@ -3,18 +3,19 @@ package cpu
 import (
 	"time"
 
+	"github.com/graphql-go/graphql"
 	"github.com/shirou/gopsutil/cpu"
 )
 
 type CPU struct {
-	Cores []Core
+	Cores []Core `json:"cores"`
 }
 
 type Core struct {
-	Percent float64
+	Percent float64 `json:"percent"`
 }
 
-func Run() (CPU, error) {
+func Resolve(params graphql.ResolveParams) (interface{}, error) {
 	p, err := cpu.Percent(1*time.Second, true)
 	if err != nil {
 		return CPU{}, err
