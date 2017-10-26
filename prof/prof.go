@@ -22,6 +22,15 @@ var cpuType = gq.NewObject(
 			"cores": &gq.Field{
 				Type: gq.NewList(coreType),
 			},
+			"model": &gq.Field{
+				Type: gq.String,
+			},
+			"model_name": &gq.Field{
+				Type: gq.String,
+			},
+			"cache_size": &gq.Field{
+				Type: gq.Int,
+			},
 		},
 	})
 

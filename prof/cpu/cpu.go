@@ -8,7 +8,10 @@ import (
 )
 
 type CPU struct {
-	Cores []Core `json:"cores"`
+	Cores     []Core `json:"cores"`
+	Model     string `json:"model"`
+	ModelName string `json:"model_name"`
+	CacheSize int32  `json:"cache_size"`
 }
 
 type Core struct {
@@ -20,12 +23,24 @@ func Resolve(params graphql.ResolveParams) (interface{}, error) {
 	if err != nil {
 		return CPU{}, err
 	}
+
 	cores := make([]Core, len(p))
 	for i, v := range p {
-		cores[i] = Core{v}
+		cores[i] = Core{
+			Percent: v,
+		}
 	}
 
-	return CPU{
-		Cores: cores,
-	}, nil
+	infos, err := cpu.Info()
+	if err != nil {
+		return CPU{}, err
+	}
+	var cpu CPU
+	if len(infos) > 0 {
+		cpu.Model = infos[0].Model
+		cpu.ModelName = infos[0].ModelName
+		cpu.CacheSize = infos[0].CacheSize
+	}
+	cpu.Cores = cores
+	return cpu, nil
 }
