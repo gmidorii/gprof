@@ -5,41 +5,12 @@ import (
 	"github.com/midorigreen/gprof/prof/cpu"
 )
 
-var coreType = gq.NewObject(
-	gq.ObjectConfig{
-		Name: "Core",
-		Fields: gq.Fields{
-			"percent": &gq.Field{
-				Type: gq.Float,
-			},
-		},
-	})
-
-var cpuType = gq.NewObject(
-	gq.ObjectConfig{
-		Name: "CPU",
-		Fields: gq.Fields{
-			"cores": &gq.Field{
-				Type: gq.NewList(coreType),
-			},
-			"model": &gq.Field{
-				Type: gq.String,
-			},
-			"model_name": &gq.Field{
-				Type: gq.String,
-			},
-			"cache_size": &gq.Field{
-				Type: gq.Int,
-			},
-		},
-	})
-
 var rootQuery = gq.NewObject(
 	gq.ObjectConfig{
 		Name: "RoorQuery",
 		Fields: gq.Fields{
 			"cpu": &gq.Field{
-				Type:        cpuType,
+				Type:        cpu.Type,
 				Description: "List of cpus",
 				Resolve:     cpu.Resolve,
 			},
