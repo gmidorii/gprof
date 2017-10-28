@@ -3,6 +3,7 @@ package prof
 import (
 	gq "github.com/graphql-go/graphql"
 	"github.com/midorigreen/gprof/prof/cpu"
+	"github.com/midorigreen/gprof/prof/disk"
 )
 
 var rootQuery = gq.NewObject(
@@ -13,6 +14,11 @@ var rootQuery = gq.NewObject(
 				Type:        cpu.Type,
 				Description: "List of cpus",
 				Resolve:     cpu.Resolve,
+			},
+			"disk": &gq.Field{
+				Type:        disk.Type,
+				Description: "prof disk",
+				Resolve:     disk.Resolve,
 			},
 		},
 		Description: "Root",
