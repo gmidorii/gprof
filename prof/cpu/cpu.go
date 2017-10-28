@@ -7,7 +7,7 @@ import (
 	"github.com/shirou/gopsutil/cpu"
 )
 
-type CPU struct {
+type Prof struct {
 	Cores     []Core `json:"cores"`
 	Model     string `json:"model"`
 	ModelName string `json:"model_name"`
@@ -21,7 +21,7 @@ type Core struct {
 func Resolve(params gq.ResolveParams) (interface{}, error) {
 	p, err := cpu.Percent(1*time.Second, true)
 	if err != nil {
-		return CPU{}, err
+		return Prof{}, err
 	}
 
 	cores := make([]Core, len(p))
@@ -33,14 +33,14 @@ func Resolve(params gq.ResolveParams) (interface{}, error) {
 
 	infos, err := cpu.Info()
 	if err != nil {
-		return CPU{}, err
+		return Prof{}, err
 	}
-	var cpu CPU
+	var prof Prof
 	if len(infos) > 0 {
-		cpu.Model = infos[0].Model
-		cpu.ModelName = infos[0].ModelName
-		cpu.CacheSize = infos[0].CacheSize
+		prof.Model = infos[0].Model
+		prof.ModelName = infos[0].ModelName
+		prof.CacheSize = infos[0].CacheSize
 	}
-	cpu.Cores = cores
-	return cpu, nil
+	prof.Cores = cores
+	return prof, nil
 }

@@ -15,7 +15,7 @@ var coreType = gq.NewObject(
 
 var Type = gq.NewObject(
 	gq.ObjectConfig{
-		Name: "CPU",
+		Name: "Prof",
 		Fields: gq.Fields{
 			"cores": &gq.Field{
 				Type: gq.NewList(coreType),
