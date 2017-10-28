@@ -3,16 +3,6 @@ package cpu
 
 import gq "github.com/graphql-go/graphql"
 
-var coreType = gq.NewObject(
-	gq.ObjectConfig{
-		Name: "Core",
-		Fields: gq.Fields{
-			"percent": &gq.Field{
-				Type: gq.Float,
-			},
-		},
-	})
-
 var Type = gq.NewObject(
 	gq.ObjectConfig{
 		Name: "Prof",
@@ -28,6 +18,16 @@ var Type = gq.NewObject(
 			},
 			"cache_size": &gq.Field{
 				Type: gq.Int,
+			},
+		},
+	})
+
+var coreType = gq.NewObject(
+	gq.ObjectConfig{
+		Name: "Core",
+		Fields: gq.Fields{
+			"percent": &gq.Field{
+				Type: gq.Float,
 			},
 		},
 	})
