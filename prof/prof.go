@@ -4,6 +4,7 @@ import (
 	gq "github.com/graphql-go/graphql"
 	"github.com/midorigreen/gprof/prof/cpu"
 	"github.com/midorigreen/gprof/prof/disk"
+	"github.com/midorigreen/gprof/prof/file"
 )
 
 var rootQuery = gq.NewObject(
@@ -19,6 +20,16 @@ var rootQuery = gq.NewObject(
 				Type:        disk.Type,
 				Description: "prof disk",
 				Resolve:     disk.Resolve,
+			},
+			"file": &gq.Field{
+				Type:        file.Type,
+				Description: "tail file content",
+				Resolve:     file.Resolve,
+				Args: gq.FieldConfigArgument{
+					"path": &gq.ArgumentConfig{
+						Type: gq.String,
+					},
+				},
 			},
 		},
 		Description: "Root",
