@@ -9,6 +9,9 @@ var Type = gq.NewObject(
 			"name": &gq.Field{
 				Type: gq.String,
 			},
+			"updated_time": &gq.Field{
+				Type: gq.String,
+			},
 			"content": &gq.Field{
 				Type: gq.String,
 			},
