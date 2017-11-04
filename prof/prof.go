@@ -29,6 +29,9 @@ var rootQuery = gq.NewObject(
 					"path": &gq.ArgumentConfig{
 						Type: gq.String,
 					},
+					"num": &gq.ArgumentConfig{
+						Type: gq.Int,
+					},
 				},
 			},
 		},

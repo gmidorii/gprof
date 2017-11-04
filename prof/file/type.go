@@ -9,5 +9,8 @@ var Type = gq.NewObject(
 			"name": &gq.Field{
 				Type: gq.String,
 			},
+			"content": &gq.Field{
+				Type: gq.String,
+			},
 		},
 	})
