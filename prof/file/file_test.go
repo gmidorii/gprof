@@ -3,7 +3,6 @@ package file
 import (
 	"bufio"
 	"bytes"
-	"io"
 	"strings"
 	"testing"
 )
@@ -11,7 +10,7 @@ import (
 var random []byte = []byte("hhgakjgangnaganaaaanbakjgagmanmablajgbbahgajgangkla")
 var lineSep []byte = []byte("\n")
 
-func makeReader(b *testing.B) io.Reader {
+func createRandoms(b *testing.B) []byte {
 	b.Helper()
 
 	randoms := make([]byte, 0, 10000000000)
@@ -19,13 +18,16 @@ func makeReader(b *testing.B) io.Reader {
 		randoms = append(randoms, random...)
 		randoms = append(randoms, lineSep...)
 	}
-	return bytes.NewReader(randoms)
+	return randoms
 }
 
-func BenchmarkFileCount(b *testing.B) {
+func BenchmarkScanner(b *testing.B) {
+	randoms := createRandoms(b)
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		reader := makeReader(b)
+		cp := make([]byte, len(randoms))
+		copy(cp, randoms)
+		reader := bytes.NewReader(cp)
 		b.StartTimer()
 
 		scanner := bufio.NewScanner(reader)
