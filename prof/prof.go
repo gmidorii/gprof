@@ -20,6 +20,11 @@ var rootQuery = gq.NewObject(
 				Type:        disk.Type,
 				Description: "prof disk",
 				Resolve:     disk.Resolve,
+				Args: gq.FieldConfigArgument{
+					"path": &gq.ArgumentConfig{
+						Type: gq.String,
+					},
+				},
 			},
 			"file": &gq.Field{
 				Type:        file.Type,

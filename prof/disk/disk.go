@@ -2,11 +2,24 @@ package disk
 
 import (
 	"fmt"
-	"math"
+	"os"
 
 	gq "github.com/graphql-go/graphql"
 	"github.com/shirou/gopsutil/disk"
 )
+
+type form struct {
+	Path string
+}
+
+func (f *form) parse(args map[string]interface{}) {
+	path, ok := args["path"].(string)
+	if !ok {
+		path = os.Getenv("HOME")
+	}
+
+	f.Path = path
+}
 
 type Prof struct {
 	IO    IO    `json:"io"`
@@ -25,13 +38,15 @@ type Usage struct {
 }
 
 func Resolve(params gq.ResolveParams) (interface{}, error) {
-	stat, err := disk.Usage("/Users/midori")
+	f := form{}
+	f.parse(params.Args)
+	fmt.Println(params.Args)
+
+	stat, err := disk.Usage(f.Path)
 	if err != nil {
 		return Prof{}, err
 	}
 
-	fmt.Println(stat.Total)
-	fmt.Println(uint64(math.MaxInt32))
 	return Prof{
 		IO: IO{
 			ReadCount: 10,
