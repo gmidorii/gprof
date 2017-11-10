@@ -9,7 +9,7 @@ import (
 
 var rootQuery = gq.NewObject(
 	gq.ObjectConfig{
-		Name: "RoorQuery",
+		Name: "RootQuery",
 		Fields: gq.Fields{
 			"cpu": &gq.Field{
 				Type:        cpu.Type,
